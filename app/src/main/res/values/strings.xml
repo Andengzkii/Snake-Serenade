@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Snake Serenade</string>
+
+    <string name="game_over">GAME OVER</string>
+    <string name="Move_up">Move up</string>
+
+</resources>

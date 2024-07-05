@@ -1,0 +1,12 @@
+
+–	java:S116"TRename this field "AGameView" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßé¡8È³¬•ˆ2J$da7286c9-7ffb-4517-96e8-12d11206f17d
+¥
+java:S1450"]Remove the "mGameScoreText" field and declare it as a local variable in the relevant methods.(Ì¯ˆÃıÿÿÿÿ8Ï³¬•ˆ2J$ffc55e57-69d8-4dc8-90f1-dc4437ea5e11
+r
+java:S1874 "/Remove this use of "Handler"; it is deprecated.(íĞÜ¼8×³¬•ˆ2J$ee258506-9747-4ff6-aff0-d75f8812734d
+t
+java:S1602,",Remove useless curly braces around statement(Ø¦¹øÿÿÿÿ8Ü³¬•ˆ2J$38afd351-45e1-4a92-9fb1-b3e15d96003d
+d	java:S131]""Add a default case to this switch.(°Ïº»8ä³¬•ˆ2J$07f7c671-2af8-44bf-bc71-e1dc5811a1f0
+¦
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(®ûºöÿÿÿÿÿ8ç³¬•ˆ2J$00f82b94-ee57-46e5-bf8e-a19de31a6551
+p	java:S108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8è³¬•ˆ2J$38466d50-6395-4a1a-b27b-e6af102dfa72
