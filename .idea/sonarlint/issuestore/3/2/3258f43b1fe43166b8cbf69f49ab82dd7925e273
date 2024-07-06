@@ -1,7 +1,28 @@
 
-d
-java:S2184Á"ACast one of the operands of this addition operation to a "float".(­™ïøıÿÿÿÿ8¤å­•ˆ2
-c
-java:S2184Á"@Cast one of the operands of this integer division to a "double".(­™ïøıÿÿÿÿ8¤å­•ˆ2
-:
-java:S2119U"Save and re-use this "Random".(¼İÅf8èæ­•ˆ2
+¡	java:S135í"YReduce the total number of break and continue statements in this loop to use at most one.(Ç¸Åıÿÿÿÿ8ÓªÃ½ˆ2J$a720fd63-2696-4c6f-9016-9b91e9ca2646
+…
+java:S2184ş"ACast one of the operands of this addition operation to a "float".(Ô÷àÔ8ÖªÃ½ˆ2J$12c0b523-25b5-42fd-bc34-57512d55995d
+„
+java:S2184ş"@Cast one of the operands of this integer division to a "double".(Ô÷àÔ8ÖªÃ½ˆ2J$a6844011-e5e9-452b-8206-28e92d4bfbbf
+Š
+java:S2184Œ"ACast one of the operands of this addition operation to a "float".(†ÕÄüÿÿÿÿ8ÖªÃ½ˆ2J$a10b7a2c-f1ca-4911-a673-d77d8184015e
+Š
+java:S2184Œ"ACast one of the operands of this addition operation to a "float".(†ÕÄüÿÿÿÿ8ÖªÃ½ˆ2J$c3dfd71c-f228-4dee-afca-4f22bbbc745c
+
+java:S2184Œ"DCast one of the operands of this subtraction operation to a "float".(†ÕÄüÿÿÿÿ8ÖªÃ½ˆ2J$05cb1a96-8b31-4214-ac10-d7ad1f7fd707
+
+java:S2184Œ"DCast one of the operands of this subtraction operation to a "float".(†ÕÄüÿÿÿÿ8ÖªÃ½ˆ2J$af4f9e4c-7616-43e0-a089-3dbe41d6b1cd
+`
+java:S2119\"Save and re-use this "Random".(¼İÅf8ê¬Ã½ˆ2J$90a6bfe0-39c5-49dc-86ce-9a939e7bf7e1
+`
+java:S2119n"Save and re-use this "Random".(¼İÅf8ì¬Ã½ˆ2J$d158921d-6f4d-4c56-8703-8e330d4f2900
+`
+java:S2119y"Save and re-use this "Random".(¼İÅf8í¬Ã½ˆ2J$a6e5896d-82e9-4111-b3cb-7fb433dcd3c6
+’
+java:S1871£"IThis case's code block is the same as the block for the case on line 159.(ÚÄìœúÿÿÿÿ8ğ¬Ã½ˆ2J$7135a963-59fd-48a0-8ecb-27e9b5477c89
+¢
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8ı¬Ã½ˆ2J$d21c3623-762e-4c8a-9643-955014b80119
+€
+java:S1612¡"7Replace this lambda with method reference 'this::next'.(ÿö³ûÿÿÿÿ8ÿ¬Ã½ˆ2J$67d3c3ac-b795-41ab-a8f5-bea8072cda64
+¢
+java:S2142¶"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8€­Ã½ˆ2J$89bbdbf0-fc40-4dc8-af41-7c3d59943a2c

@@ -1,6 +1,7 @@
 package com.project.snakeserenade.game;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,19 +16,20 @@ import com.project.snakeserenade.R;
 import java.util.LinkedList;
 import java.util.Random;
 
-
-
 public class GameView extends View {
     public GameView(Context context) {
         super(context);
+        init();
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     private static final String TAG = "GameView";
@@ -48,10 +50,13 @@ public class GameView extends View {
     private int mBoxPadding;
 
     private final Paint mPaint = new Paint();
+    private volatile boolean mIsRunning = false;
+    private Thread mGameThread;
+
+    private int powerUpDuration = 0;
 
     public void init() {
-        mBoxSize = getContext().getResources()
-                .getDimensionPixelSize(R.dimen.game_size) / MAP_SIZE;
+        mBoxSize = getContext().getResources().getDimensionPixelSize(R.dimen.game_size) / MAP_SIZE;
         mBoxPadding = mBoxSize / 10;
     }
 
@@ -60,6 +65,7 @@ public class GameView extends View {
         mDir = Direction.RIGHT;
         initMap();
         updateScore();
+        startGameThread();
     }
 
     public void setGameScoreUpdatedListener(ScoreUpdatedListener scoreUpdatedListener) {
@@ -67,27 +73,56 @@ public class GameView extends View {
     }
 
     private void initMap() {
+        // Initialize all points as empty
         for (int i = 0; i < MAP_SIZE; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
                 mPoints[i][j] = new Point(j, i);
             }
         }
+
+        // Place snake initially
         mSnake.clear();
         for (int i = 0; i < 3; i++) {
             Point point = getPoint(START_X + i, START_Y);
             point.type = PointType.SNAKE;
             mSnake.addFirst(point);
         }
+
+        // Randomly place obstacles
+        Random random = new Random();
+        int obstacleCount = 10; // Adjust the number of obstacles as needed
+        for (int i = 0; i < obstacleCount; i++) {
+            Point point;
+            do {
+                point = getPoint(random.nextInt(MAP_SIZE), random.nextInt(MAP_SIZE));
+            } while (point.type != PointType.EMPTY); // Ensure placing on empty space
+            point.type = PointType.OBSTACLE;
+        }
+
+        // Place initial apple
         randomApple();
+
+        // Place initial power-up
+        randomPowerUp();
     }
 
     private void randomApple() {
         Random random = new Random();
         while (true) {
-            Point point = getPoint(random.nextInt(MAP_SIZE),
-                    random.nextInt(MAP_SIZE));
+            Point point = getPoint(random.nextInt(MAP_SIZE), random.nextInt(MAP_SIZE));
             if (point.type == PointType.EMPTY) {
                 point.type = PointType.APPLE;
+                break;
+            }
+        }
+    }
+
+    private void randomPowerUp() {
+        Random random = new Random();
+        while (true) {
+            Point point = getPoint(random.nextInt(MAP_SIZE), random.nextInt(MAP_SIZE));
+            if (point.type == PointType.EMPTY) {
+                point.type = PointType.POWER_UP;
                 break;
             }
         }
@@ -99,29 +134,54 @@ public class GameView extends View {
 
     public void next() {
         Point first = mSnake.getFirst();
-        Log.d(TAG, "first: " + first.x + " " + first.y);
         Point next = getNext(first);
-        Log.d(TAG, "next: " + next.x + " " + next.y);
 
         switch (next.type) {
             case EMPTY:
-                Log.d(TAG, "next: empty");
                 next.type = PointType.SNAKE;
                 mSnake.addFirst(next);
                 mSnake.getLast().type = PointType.EMPTY;
                 mSnake.removeLast();
                 break;
             case APPLE:
-                Log.d(TAG, "next: apple");
                 next.type = PointType.SNAKE;
                 mSnake.addFirst(next);
                 randomApple();
                 updateScore();
                 break;
-            case SNAKE:
-                Log.d(TAG, "next: snake");
-                mGameOver = true;
+            case POWER_UP:
+                next.type = PointType.SNAKE;
+                mSnake.addFirst(next);
+                powerUpDuration = 10; // Power-up lasts for 10 moves
+                randomPowerUp();
+                updateScore();
                 break;
+            case SNAKE:
+                mGameOver = true;
+                saveHighScore();
+                break;
+            case OBSTACLE:
+                mGameOver = true; // Game over if the snake hits an obstacle
+                saveHighScore(); // Optionally save high score when game over
+                break;
+        }
+
+        if (!mGameOver) {
+            if (powerUpDuration > 0) {
+                powerUpDuration--;
+            }
+            invalidate(); // Redraw the view if game is not over
+        }
+    }
+
+    private void saveHighScore() {
+        if (mGameOver) {
+            Context context = getContext();
+            SharedPreferences prefs = context.getSharedPreferences("high_scores", Context.MODE_PRIVATE);
+            int score = mSnake.size() - 3; // Adjust scoring logic as needed
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("score_" + System.currentTimeMillis(), score);
+            editor.apply();
         }
     }
 
@@ -172,6 +232,7 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         for (int y = 0; y < MAP_SIZE; y++) {
             for (int x = 0; x < MAP_SIZE; x++) {
                 int left = mBoxSize * x;
@@ -186,24 +247,75 @@ public class GameView extends View {
                     case APPLE:
                         mPaint.setColor(Color.BLACK);
                         canvas.drawRect(left, top, right, bottom, mPaint);
-                        mPaint.setColor(Color.RED); // Change color to red
+                        mPaint.setColor(Color.RED); // Change color to red for apple
                         float textSize = (float) (mBoxSize * 2.0); // Adjust size here
                         mPaint.setTextSize(textSize);
                         mPaint.setTextAlign(Paint.Align.CENTER);
-                        canvas.drawText("*", left + mBoxSize / 2, top + mBoxSize / 2 + textSize / 3, mPaint);
+                        canvas.drawText("", left + mBoxSize / 2, top + mBoxSize / 2 + textSize / 3, mPaint);
                         continue; // Skip the rest of the loop to avoid drawing snake over apple
                     case SNAKE:
-                        mPaint.setColor(Color.BLACK);
-                        canvas.drawRect(left, top, right, bottom, mPaint);
                         mPaint.setColor(Color.WHITE);
+                        canvas.drawRect(left, top, right, bottom, mPaint);
                         left += mBoxPadding;
                         right -= mBoxPadding;
                         top += mBoxPadding;
                         bottom -= mBoxPadding;
                         break;
+                    case OBSTACLE:
+                        mPaint.setColor(Color.BLACK);
+                        canvas.drawRect(left, top, right, bottom, mPaint);
+                        mPaint.setColor(Color.GRAY); // Change color to gray for obstacles
+                        canvas.drawRect(left + mBoxPadding, top + mBoxPadding, right - mBoxPadding, bottom - mBoxPadding, mPaint);
+                        continue; // Skip the rest of the loop to avoid drawing snake over obstacles
+                    case POWER_UP:
+                        mPaint.setColor(Color.BLUE); // Color for power-ups
+                        break;
                 }
+
                 canvas.drawRect(left, top, right, bottom, mPaint);
             }
         }
+    }
+
+    private void startGameThread() {
+        mIsRunning = true;
+        mGameThread = new Thread(() -> {
+            while (mIsRunning) {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Game thread interrupted", e);
+                }
+                post(() -> next());
+            }
+        });
+        mGameThread.start();
+    }
+
+    public void stopGame() {
+        mIsRunning = false;
+        if (mGameThread != null) {
+            mGameThread.interrupt();
+            mGameThread = null;
+        }
+        mGameOver = true;
+        invalidate();
+    }
+
+    public void stopGameThread() {
+        mIsRunning = false;
+        if (mGameThread != null) {
+            try {
+                mGameThread.join();
+            } catch (InterruptedException e) {
+                Log.e(TAG, "Error stopping game thread", e);
+            }
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        stopGameThread();
     }
 }

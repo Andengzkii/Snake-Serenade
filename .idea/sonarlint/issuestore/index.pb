@@ -13,3 +13,5 @@ z
 Japp/src/main/java/com/project/snakeserenade/game/ScoreUpdatedListener.java,5\2\525e778c08542ccacf6bde8214e3dd3df5212d7f
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+y
+Iapp/src/main/java/com/project/snakeserenade/game/LeaderboardActivity.java,1\f\1f7e8b38bf05f9277e924c799e2b6eb83f301661

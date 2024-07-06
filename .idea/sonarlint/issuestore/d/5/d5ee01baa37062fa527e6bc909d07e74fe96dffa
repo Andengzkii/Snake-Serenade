@@ -1,12 +1,19 @@
 
-–	java:S116"TRename this field "AGameView" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßé¡8È³¬•ˆ2J$da7286c9-7ffb-4517-96e8-12d11206f17d
+–	java:S116"TRename this field "AGameView" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßé¡8ôü´½ˆ2J$e764956b-ba60-4eaa-8367-52b7c45104a7
+š	java:S116"SRename this field "AGameBtn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨î­ùÿÿÿÿ8õü´½ˆ2J$30ff0a02-8ca9-45ed-bd40-7a3275e6458a
 ¥
-java:S1450"]Remove the "mGameScoreText" field and declare it as a local variable in the relevant methods.(Ì¯ˆÃıÿÿÿÿ8Ï³¬•ˆ2J$ffc55e57-69d8-4dc8-90f1-dc4437ea5e11
+java:S1450"]Remove the "mGameScoreText" field and declare it as a local variable in the relevant methods.(Ì¯ˆÃıÿÿÿÿ8üü´½ˆ2J$00350e13-40ed-43a5-8e1a-335eaa2c7727
+©
+java:S1450"aRemove the "mLeaderboardButton" field and declare it as a local variable in the relevant methods.(Ó€µÛûÿÿÿÿ8ıü´½ˆ2J$f222c7bc-017a-47ef-84ab-3e52fd9c721b
+
+java:S1450"[Remove the "mResetButton" field and declare it as a local variable in the relevant methods.(İÇ¿Ê8ıü´½ˆ2J$1bb826f6-8680-4084-8c12-f3d8b408806e
 r
-java:S1874 "/Remove this use of "Handler"; it is deprecated.(íĞÜ¼8×³¬•ˆ2J$ee258506-9747-4ff6-aff0-d75f8812734d
+java:S1874 "/Remove this use of "Handler"; it is deprecated.(íĞÜ¼8…ı´½ˆ2J$8b8c09aa-5a45-4488-a236-fa6ddfb4f25d
 t
-java:S1602,",Remove useless curly braces around statement(Ø¦¹øÿÿÿÿ8Ü³¬•ˆ2J$38afd351-45e1-4a92-9fb1-b3e15d96003d
-d	java:S131]""Add a default case to this switch.(°Ïº»8ä³¬•ˆ2J$07f7c671-2af8-44bf-bc71-e1dc5811a1f0
-¦
-java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(®ûºöÿÿÿÿÿ8ç³¬•ˆ2J$00f82b94-ee57-46e5-bf8e-a19de31a6551
-p	java:S108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8è³¬•ˆ2J$38466d50-6395-4a1a-b27b-e6af102dfa72
+java:S16021",Remove useless curly braces around statement(Ø¦¹øÿÿÿÿ8‰ı´½ˆ2J$a80a079a-331c-4248-9eef-e136b5e87ff0
+t
+java:S1602U",Remove useless curly braces around statement(¨Ïîàÿÿÿÿÿ8ı´½ˆ2J$d24f90c5-0f3c-4b0d-a53a-6b09e23179ae
+d	java:S131o""Add a default case to this switch.(°Ïº»8‹ş´½ˆ2J$6f0192a0-f360-491b-994d-74f52abba0d4
+
+java:S2142—"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(®ûºöÿÿÿÿÿ8ñªÀ½ˆ2
+K	java:S108—")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8òªÀ½ˆ2
