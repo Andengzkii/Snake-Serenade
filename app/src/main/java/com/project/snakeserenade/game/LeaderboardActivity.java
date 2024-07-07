@@ -24,6 +24,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("high_scores", Context.MODE_PRIVATE);
         Map<String, ?> scores = prefs.getAll();
 
+        // Use TreeMap to sort scores by key
         TreeMap<Long, Integer> sortedScores = new TreeMap<>();
         for (Map.Entry<String, ?> entry : scores.entrySet()) {
             sortedScores.put(Long.valueOf(entry.getKey().split("_")[1]), (Integer) entry.getValue());
@@ -33,6 +34,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         for (Map.Entry<Long, Integer> entry : sortedScores.descendingMap().entrySet()) {
             TextView scoreView = new TextView(this);
             scoreView.setText("Rank " + rank + ": " + entry.getValue());
+            scoreView.setTextColor(getResources().getColor(android.R.color.black)); // Ensure text color is set
             leaderboardLayout.addView(scoreView);
             rank++;
         }

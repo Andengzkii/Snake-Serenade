@@ -17,21 +17,6 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class GameView extends View {
-    public GameView(Context context) {
-        super(context);
-        init();
-    }
-
-    public GameView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
     private static final String TAG = "GameView";
 
     private static final int MAP_SIZE = 20;
@@ -54,6 +39,22 @@ public class GameView extends View {
     private Thread mGameThread;
 
     private int powerUpDuration = 0;
+    private int mDifficultyLevel = 1; // Default difficulty level
+
+    public GameView(Context context) {
+        super(context);
+        init();
+    }
+
+    public GameView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
     public void init() {
         mBoxSize = getContext().getResources().getDimensionPixelSize(R.dimen.game_size) / MAP_SIZE;
@@ -90,7 +91,7 @@ public class GameView extends View {
 
         // Randomly place obstacles
         Random random = new Random();
-        int obstacleCount = 10; // Adjust the number of obstacles as needed
+        int obstacleCount = 10 + mDifficultyLevel * 5; // Increase obstacles with difficulty
         for (int i = 0; i < obstacleCount; i++) {
             Point point;
             do {
@@ -245,34 +246,22 @@ public class GameView extends View {
                         mPaint.setColor(Color.BLACK);
                         break;
                     case APPLE:
-                        mPaint.setColor(Color.BLACK);
+                        mPaint.setColor(Color.RED); // Color for apples
                         canvas.drawRect(left, top, right, bottom, mPaint);
-                        mPaint.setColor(Color.RED); // Change color to red for apple
-                        float textSize = (float) (mBoxSize * 2.0); // Adjust size here
-                        mPaint.setTextSize(textSize);
-                        mPaint.setTextAlign(Paint.Align.CENTER);
-                        canvas.drawText("", left + mBoxSize / 2, top + mBoxSize / 2 + textSize / 3, mPaint);
-                        continue; // Skip the rest of the loop to avoid drawing snake over apple
+                        break;
                     case SNAKE:
-                        mPaint.setColor(Color.WHITE);
+                        mPaint.setColor(Color.WHITE); // Color for snake body
                         canvas.drawRect(left, top, right, bottom, mPaint);
-                        left += mBoxPadding;
-                        right -= mBoxPadding;
-                        top += mBoxPadding;
-                        bottom -= mBoxPadding;
                         break;
                     case OBSTACLE:
-                        mPaint.setColor(Color.BLACK);
+                        mPaint.setColor(Color.GRAY); // Color for obstacles
                         canvas.drawRect(left, top, right, bottom, mPaint);
-                        mPaint.setColor(Color.GRAY); // Change color to gray for obstacles
-                        canvas.drawRect(left + mBoxPadding, top + mBoxPadding, right - mBoxPadding, bottom - mBoxPadding, mPaint);
-                        continue; // Skip the rest of the loop to avoid drawing snake over obstacles
+                        break;
                     case POWER_UP:
                         mPaint.setColor(Color.BLUE); // Color for power-ups
+                        canvas.drawRect(left, top, right, bottom, mPaint);
                         break;
                 }
-
-                canvas.drawRect(left, top, right, bottom, mPaint);
             }
         }
     }
@@ -317,5 +306,17 @@ public class GameView extends View {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         stopGameThread();
+    }
+
+    public void increaseDifficulty() {
+        if (mDifficultyLevel < 3) { // Assuming 3 difficulty levels
+            mDifficultyLevel++;
+            restartGame(); // Restart the game with increased difficulty
+        }
+    }
+
+    private void restartGame() {
+        stopGameThread();
+        newGame(); // Start a new game with updated settings
     }
 }
